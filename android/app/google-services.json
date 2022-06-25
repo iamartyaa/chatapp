@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "465754789613",
+    "firebase_url": "https://mywallet-4401d-default-rtdb.firebaseio.com",
+    "project_id": "mywallet-4401d",
+    "storage_bucket": "mywallet-4401d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:465754789613:android:f8a91b15dc9dfd9ac85ee4",
+        "android_client_info": {
+          "package_name": "com.example.chatapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "465754789613-32k9ami9v8dpit3vl0m5h7b6slie5b45.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZ6X--QpuIce7raTThAsIyKUo4CT8hQv0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "465754789613-32k9ami9v8dpit3vl0m5h7b6slie5b45.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
