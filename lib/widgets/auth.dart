@@ -1,3 +1,5 @@
+import 'dart:isolate';
+
 import 'package:flutter/material.dart';
 
 class AuthForm extends StatefulWidget {
@@ -8,7 +10,8 @@ class AuthForm extends StatefulWidget {
     bool isLogin,
     BuildContext ctx,
   ) submitFn;
-  AuthForm(this.submitFn);
+  final bool isLoading;
+  AuthForm(this.submitFn, this.isLoading);
 
   @override
   State<AuthForm> createState() => _AuthFormState();
@@ -25,7 +28,8 @@ class _AuthFormState extends State<AuthForm> {
     // FocusScope.of(context).unfocus();
     if (isValid) {
       _formKey.currentState!.save();
-      widget.submitFn(userEmail.trim(),userName.trim(),userPassword.trim(),_isLogIn,context);
+      widget.submitFn(userEmail.trim(), userName.trim(), userPassword.trim(),
+          _isLogIn, context);
     }
 
     //once validated we can send to firebase
@@ -132,22 +136,25 @@ class _AuthFormState extends State<AuthForm> {
                   const SizedBox(
                     height: 12,
                   ),
-                  RaisedButton(
-                    onPressed: (){
-                      _trySubmit();
-                    },
-                    child: Text(_isLogIn ? 'LogIn' : 'SignUp'),
-                  ),
-                  FlatButton(
-                    onPressed: () {
-                      setState(() {
-                        _isLogIn = !_isLogIn;
-                      });
-                    },
-                    textColor: Theme.of(context).primaryColor,
-                    child:
-                        Text(_isLogIn ? 'Create new Account' : 'Login instead'),
-                  ),
+                  if (widget.isLoading) CircularProgressIndicator(),
+                  if (!widget.isLoading)
+                    RaisedButton(
+                      onPressed: () {
+                        _trySubmit();
+                      },
+                      child: Text(_isLogIn ? 'LogIn' : 'SignUp'),
+                    ),
+                  if (!widget.isLoading)
+                    FlatButton(
+                      onPressed: () {
+                        setState(() {
+                          _isLogIn = !_isLogIn;
+                        });
+                      },
+                      textColor: Theme.of(context).primaryColor,
+                      child: Text(
+                          _isLogIn ? 'Create new Account' : 'Login instead'),
+                    ),
                 ],
               )),
         ),

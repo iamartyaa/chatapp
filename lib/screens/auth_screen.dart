@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:chatapp/widgets/auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
@@ -14,6 +15,7 @@ class AuthScreen extends StatefulWidget {
 
 class _AuthScreenState extends State<AuthScreen> {
   final _auth = FirebaseAuth.instance;
+  var _isLoading = false;
   @override
   Widget build(BuildContext context) {
     void _submitAuthForm(String email, String password, String username,
@@ -21,12 +23,30 @@ class _AuthScreenState extends State<AuthScreen> {
       // AuthResult authResult;
       UserCredential authResult;
       try {
+        setState(() {
+          _isLoading = true;
+        });
         if (isLogin) {
           authResult = await _auth.signInWithEmailAndPassword(
               email: email, password: password);
+
+          setState(() {
+            _isLoading = false;
+          });
         } else {
           authResult = await _auth.createUserWithEmailAndPassword(
               email: email, password: password);
+
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(authResult.user!.uid)
+              .set({
+            'username': username,
+            'email': email,
+          });
+          setState(() {
+            _isLoading = false;
+          });
         }
       } on PlatformException catch (err) {
         var message = 'An error occured, please check your credentials';
@@ -42,6 +62,9 @@ class _AuthScreenState extends State<AuthScreen> {
           ),
           backgroundColor: Colors.white,
         ));
+        setState(() {
+          _isLoading = false;
+        });
       } catch (err) {
         Scaffold.of(ctx).showSnackBar(SnackBar(
           content: Text(
@@ -50,12 +73,15 @@ class _AuthScreenState extends State<AuthScreen> {
           ),
           backgroundColor: Colors.white,
         ));
+        setState(() {
+          _isLoading = false;
+        });
       }
     }
 
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
-      body: AuthForm(_submitAuthForm),
+      body: AuthForm(_submitAuthForm, _isLoading),
     );
   }
 }
