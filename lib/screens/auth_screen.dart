@@ -18,15 +18,18 @@ class _AuthScreenState extends State<AuthScreen> {
   var _isLoading = false;
   @override
   Widget build(BuildContext context) {
+
     void _submitAuthForm(String email, String password, String username,
         bool isLogin, BuildContext ctx) async {
       // AuthResult authResult;
       UserCredential authResult;
+      print(password+"out");
       try {
         setState(() {
           _isLoading = true;
         });
         if (isLogin) {
+          print(password+"in");
           authResult = await _auth.signInWithEmailAndPassword(
               email: email, password: password);
 

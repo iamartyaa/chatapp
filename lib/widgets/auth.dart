@@ -28,8 +28,8 @@ class _AuthFormState extends State<AuthForm> {
     // FocusScope.of(context).unfocus();
     if (isValid) {
       _formKey.currentState!.save();
-      widget.submitFn(userEmail.trim(), userName.trim(), userPassword.trim(),
-          _isLogIn, context);
+      // print(userPassword);
+      widget.submitFn(userEmail, userPassword, userName, _isLogIn, context);
     }
 
     //once validated we can send to firebase
@@ -52,16 +52,6 @@ class _AuthFormState extends State<AuthForm> {
                     keyboardType: TextInputType.emailAddress,
                     decoration: const InputDecoration(
                       labelText: 'Email Address',
-                      // enabledBorder: OutlineInputBorder(
-                      //   borderSide: BorderSide(
-                      //       width: 1, color: Theme.of(context).primaryColor),
-                      //   borderRadius: BorderRadius.circular(15),
-                      // ),
-                      // focusedBorder: OutlineInputBorder(
-                      //   borderSide:
-                      //       const BorderSide(width: 1, color: Colors.red),
-                      //   borderRadius: BorderRadius.circular(15),
-                      // ),
                     ),
                     validator: (value) {
                       if (value!.isEmpty || !value.contains('@')) {
@@ -82,16 +72,6 @@ class _AuthFormState extends State<AuthForm> {
                       keyboardType: TextInputType.name,
                       decoration: const InputDecoration(
                         labelText: 'Username',
-                        // enabledBorder: OutlineInputBorder(
-                        //   borderSide: BorderSide(
-                        //       width: 1, color: Theme.of(context).primaryColor),
-                        //   borderRadius: BorderRadius.circular(15),
-                        // ),
-                        // focusedBorder: OutlineInputBorder(
-                        //   borderSide:
-                        //       const BorderSide(width: 1, color: Colors.red),
-                        //   borderRadius: BorderRadius.circular(15),
-                        // ),
                       ),
                       validator: (value) {
                         if (value!.isEmpty || value.length < 4) {
@@ -112,16 +92,6 @@ class _AuthFormState extends State<AuthForm> {
                     obscureText: true,
                     decoration: const InputDecoration(
                       labelText: 'Password',
-                      // enabledBorder: OutlineInputBorder(
-                      //   borderSide: BorderSide(
-                      //       width: 1, color: Theme.of(context).primaryColor),
-                      //   borderRadius: BorderRadius.circular(15),
-                      // ),
-                      // focusedBorder: OutlineInputBorder(
-                      //   borderSide:
-                      //       const BorderSide(width: 1, color: Colors.red),
-                      //   borderRadius: BorderRadius.circular(15),
-                      // ),
                     ),
                     validator: (value) {
                       if (value!.isEmpty || value.length < 7) {
