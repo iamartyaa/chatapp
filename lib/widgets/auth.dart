@@ -6,6 +6,7 @@ class AuthForm extends StatefulWidget {
     String password,
     String username,
     bool isLogin,
+    BuildContext ctx,
   ) submitFn;
   AuthForm(this.submitFn);
 
@@ -21,10 +22,10 @@ class _AuthFormState extends State<AuthForm> {
   var userPassword = '';
   void _trySubmit() {
     final isValid = _formKey.currentState!.validate();
-    FocusScope.of(context).unfocus();
+    // FocusScope.of(context).unfocus();
     if (isValid) {
       _formKey.currentState!.save();
-      widget.submitFn(userEmail,userName,userPassword,_isLogIn);
+      widget.submitFn(userEmail.trim(),userName.trim(),userPassword.trim(),_isLogIn,context);
     }
 
     //once validated we can send to firebase
@@ -132,7 +133,9 @@ class _AuthFormState extends State<AuthForm> {
                     height: 12,
                   ),
                   RaisedButton(
-                    onPressed: _trySubmit,
+                    onPressed: (){
+                      _trySubmit();
+                    },
                     child: Text(_isLogIn ? 'LogIn' : 'SignUp'),
                   ),
                   FlatButton(
