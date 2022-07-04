@@ -47,6 +47,15 @@ class _AuthFormState extends State<AuthForm> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  CircleAvatar(
+                    radius: 50,
+                  ),
+                  FlatButton.icon(
+                    textColor: Theme.of(context).primaryColor,
+                    onPressed: () {},
+                    icon: Icon(Icons.image),
+                    label: Text('Add Profile Picture'),
+                  ),
                   TextFormField(
                     key: ValueKey('email'),
                     keyboardType: TextInputType.emailAddress,
