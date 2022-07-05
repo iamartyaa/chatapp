@@ -1,5 +1,6 @@
-import 'dart:isolate';
+import 'dart:io';
 
+import 'package:chatapp/widgets/pickers/user_image_picker.dart';
 import 'package:flutter/material.dart';
 
 class AuthForm extends StatefulWidget {
@@ -7,6 +8,7 @@ class AuthForm extends StatefulWidget {
     String email,
     String password,
     String username,
+    File? image,
     bool isLogin,
     BuildContext ctx,
   ) submitFn;
@@ -23,13 +25,29 @@ class _AuthFormState extends State<AuthForm> {
   var userEmail = '';
   var userName = '';
   var userPassword = '';
+  File? userImageFile;
+
+  void pickedImage(File image) {
+    userImageFile = image;
+  }
+
   void _trySubmit() {
     final isValid = _formKey.currentState!.validate();
     // FocusScope.of(context).unfocus();
+    if (userImageFile == null && !_isLogIn) {
+      Scaffold.of(context).showSnackBar(const SnackBar(
+        content: Text(
+          'Please Pick an Image',
+          style: TextStyle(color: Colors.black),
+        ),
+        backgroundColor: Colors.white,
+      ));
+      return;
+    }
     if (isValid) {
       _formKey.currentState!.save();
       // print(userPassword);
-      widget.submitFn(userEmail, userPassword, userName, _isLogIn, context);
+      widget.submitFn(userEmail, userPassword, userName, userImageFile, _isLogIn, context);
     }
 
     //once validated we can send to firebase
@@ -47,17 +65,9 @@ class _AuthFormState extends State<AuthForm> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  CircleAvatar(
-                    radius: 50,
-                  ),
-                  FlatButton.icon(
-                    textColor: Theme.of(context).primaryColor,
-                    onPressed: () {},
-                    icon: Icon(Icons.image),
-                    label: Text('Add Profile Picture'),
-                  ),
+                  if (!_isLogIn) UserImagePicker(pickedImage),
                   TextFormField(
-                    key: ValueKey('email'),
+                    key: const ValueKey('email'),
                     keyboardType: TextInputType.emailAddress,
                     decoration: const InputDecoration(
                       labelText: 'Email Address',
@@ -77,7 +87,7 @@ class _AuthFormState extends State<AuthForm> {
                   ),
                   if (!_isLogIn)
                     TextFormField(
-                      key: ValueKey('name'),
+                      key: const ValueKey('name'),
                       keyboardType: TextInputType.name,
                       decoration: const InputDecoration(
                         labelText: 'Username',
@@ -96,7 +106,7 @@ class _AuthFormState extends State<AuthForm> {
                     height: 10,
                   ),
                   TextFormField(
-                    key: ValueKey('password'),
+                    key: const ValueKey('password'),
                     keyboardType: TextInputType.visiblePassword,
                     obscureText: true,
                     decoration: const InputDecoration(
@@ -115,7 +125,7 @@ class _AuthFormState extends State<AuthForm> {
                   const SizedBox(
                     height: 12,
                   ),
-                  if (widget.isLoading) CircularProgressIndicator(),
+                  if (widget.isLoading) const CircularProgressIndicator(),
                   if (!widget.isLoading)
                     RaisedButton(
                       onPressed: () {
