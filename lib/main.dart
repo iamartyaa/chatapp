@@ -17,7 +17,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Chat App',
+      title: 'QuickChat',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.pink,
         backgroundColor: Colors.pink,
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
       },),
       routes: {
         AuthScreen.routeName: (context) => AuthScreen(),
-        ChatScreen.routeName: (context) => ChatScreen(),
+        ChatScreen.routeName: (context) => const ChatScreen(),
       },
     );
   }
