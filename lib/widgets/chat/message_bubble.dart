@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 
 class MessageBubble extends StatelessWidget {
@@ -12,6 +14,7 @@ class MessageBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
+      clipBehavior: Clip.none,
       children: [
         Row(
           mainAxisAlignment:
@@ -77,7 +80,6 @@ class MessageBubble extends StatelessWidget {
           ),
         ),
       ],
-      clipBehavior: Clip.none,
     );
   }
 }

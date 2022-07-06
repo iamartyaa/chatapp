@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'dart:io';
 
 import 'package:chatapp/widgets/auth/auth.dart';
@@ -9,6 +11,8 @@ import 'package:firebase_storage/firebase_storage.dart';
 
 class AuthScreen extends StatefulWidget {
   static const routeName = '/auth-screen';
+
+  const AuthScreen({Key? key}) : super(key: key);
 
   @override
   State<AuthScreen> createState() => _AuthScreenState();
@@ -41,7 +45,7 @@ class _AuthScreenState extends State<AuthScreen> {
           final ref = FirebaseStorage.instance
               .ref()
               .child('user_images')
-              .child(authResult.user!.uid + '.jpg');
+              .child('${authResult.user!.uid}.jpg');
           await ref.putFile(image!).whenComplete(() {
             
           });
@@ -70,7 +74,7 @@ class _AuthScreenState extends State<AuthScreen> {
         Scaffold.of(ctx).showSnackBar(SnackBar(
           content: Text(
             message,
-            style: TextStyle(color: Colors.black),
+            style: const TextStyle(color: Colors.black),
           ),
           backgroundColor: Colors.white,
         ));
@@ -81,7 +85,7 @@ class _AuthScreenState extends State<AuthScreen> {
         Scaffold.of(ctx).showSnackBar(SnackBar(
           content: Text(
             err.toString(),
-            style: TextStyle(color: Colors.black),
+            style: const TextStyle(color: Colors.black),
           ),
           backgroundColor: Colors.white,
         ));

@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 
 class UserImagePicker extends StatefulWidget {
   
@@ -17,8 +16,8 @@ class _UserImagePickerState extends State<UserImagePicker> {
   XFile? _pickedImage;
 
   void _pickImage() async {
-    final _picker = ImagePicker();
-    final XFile? img = await _picker.pickImage(source: ImageSource.camera,imageQuality: 50,maxWidth: 150);
+    final picker = ImagePicker();
+    final XFile? img = await picker.pickImage(source: ImageSource.camera,imageQuality: 50,maxWidth: 150);
     setState(() {
       _pickedImage = img;
     });
@@ -33,11 +32,12 @@ class _UserImagePickerState extends State<UserImagePicker> {
           backgroundColor: Colors.grey[450],
           backgroundImage: _pickedImage !=null ? FileImage(File(_pickedImage!.path)) : null,
         ),
+        // ignore: deprecated_member_use
         FlatButton.icon(
           textColor: Theme.of(context).primaryColor,
           onPressed: _pickImage,
-          icon: Icon(Icons.image),
-          label: Text('Add Profile Picture'),
+          icon: const Icon(Icons.image),
+          label: const Text('Add Profile Picture'),
         ),
       ],
     );
