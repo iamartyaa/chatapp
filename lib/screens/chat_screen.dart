@@ -11,7 +11,7 @@ class ChatScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('ChatBox'),
+        title: const Text('ChatBox'),
         actions: [
           DropdownButton(
             underline: Container(),
@@ -22,19 +22,17 @@ class ChatScreen extends StatelessWidget {
               items: [
                 DropdownMenuItem(
                   value: 'Logout',
-                  child: Container(
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.exit_to_app,
-                          color: Colors.pink,
-                        ),
-                        SizedBox(
-                          width: 8,
-                        ),
-                        Text('Logout'),
-                      ],
-                    ),
+                  child: Row(
+                    children: const [
+                      Icon(
+                        Icons.exit_to_app,
+                        color: Colors.pink,
+                      ),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Text('Logout'),
+                    ],
                   ),
                 ),
               ],
@@ -45,13 +43,11 @@ class ChatScreen extends StatelessWidget {
               })
         ],
       ),
-      body: Container(
-        child: Column(
-          children: [
-            Expanded(child: Messages()),
-            NewMessage(),
-          ],
-        ),
+      body: Column(
+        children: const [
+          Expanded(child: Messages()),
+          NewMessage(),
+        ],
       ),
     );
   }

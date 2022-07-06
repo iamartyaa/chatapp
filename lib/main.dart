@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:chatapp/screens/auth_screen.dart';
 import 'package:chatapp/screens/chat_screen.dart';
 import 'package:chatapp/screens/splash_screen.dart';
@@ -39,10 +41,10 @@ class MyApp extends StatelessWidget {
         if (userSnapShot.hasData){
           return const ChatScreen();
         }
-        return AuthScreen();
+        return const AuthScreen();
       },),
       routes: {
-        AuthScreen.routeName: (context) => AuthScreen(),
+        AuthScreen.routeName: (context) => const AuthScreen(),
         ChatScreen.routeName: (context) => const ChatScreen(),
       },
     );

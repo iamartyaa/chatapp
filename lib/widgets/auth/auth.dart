@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use, duplicate_ignore
+
 import 'dart:io';
 
 import 'package:chatapp/widgets/pickers/user_image_picker.dart';
@@ -13,7 +15,7 @@ class AuthForm extends StatefulWidget {
     BuildContext ctx,
   ) submitFn;
   final bool isLoading;
-  AuthForm(this.submitFn, this.isLoading);
+  const AuthForm(this.submitFn, this.isLoading, {Key? key}) : super(key: key);
 
   @override
   State<AuthForm> createState() => _AuthFormState();
@@ -127,6 +129,7 @@ class _AuthFormState extends State<AuthForm> {
                   ),
                   if (widget.isLoading) const CircularProgressIndicator(),
                   if (!widget.isLoading)
+                    // ignore: deprecated_member_use
                     RaisedButton(
                       onPressed: () {
                         _trySubmit();
